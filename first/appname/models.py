@@ -16,3 +16,16 @@ class Slider(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Menu (models.Model):
+    title = models.CharField(max_length=255)
+    selected = models.BooleanField(default=False)
+
+class MenuItem(models.Model):
+    title = models.CharField(max_length=255)
+    url = models.CharField(max_length=255,blank=True,null=True)
+    order = models.PositiveIntegerField()
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True,null=True)
+    menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
+    is_disabled = models.BooleanField(default=False)
